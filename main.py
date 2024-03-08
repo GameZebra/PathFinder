@@ -23,8 +23,8 @@ def main():
     place_obstacles_weights(graph)
 
     # ----- set start and goal nodes -----
-    start_node = (2, 5)  # read from console
-    goal_node = (40, 15)  # read from console
+    start_node = (6, 5)  # read from console
+    goal_node = (9, 3)  # read from console
 
     # ----- execute the search from start to goal -----
     # path = breadth_first_search(graph, start_node, goal_node)
@@ -64,15 +64,15 @@ def breadth_first_search(graph, start_node, goal_node):
     # create a queue for discovered nodes
     discovered = []
     # put the start node into the queue
-    discovered.append(start_node);
+    discovered.append(start_node)
     # create a dictionary for keeping track of {successor: predecessor}
     family = {}
     # put the start node into the dictionary as key and None as value
-    family[start_node] = None;
+    family[start_node] = None
     # while there are nodes in the queue:
     while discovered != []:
     #   get a node (predecessor) from the queue and find its neighbors
-        temp_parent = discovered.pop(0);
+        temp_parent = discovered.pop(0)
         if temp_parent == goal_node:
             break
         temp_neighbors = graph.get_neighbors(temp_parent)
@@ -115,8 +115,7 @@ def dijkstra(graph, start_node, goal_node):
             # cost to its predecessor + cost of the transition 'predecessor --> neighbor'
             new_cost = travel_costs[current_node] + graph.get_transition_cost(neighbor)
             # if neighbor is not discovered or its new cost is lower:
-            discovered = prio_queue.get_queue()
-            if neighbor not in discovered:
+            if neighbor not in family:
                 # add the neighbor to the discovered nodes with its new cost
                 prio_queue.put(neighbor, new_cost)
                 # update the {node: predecessor} dictionary
@@ -124,7 +123,7 @@ def dijkstra(graph, start_node, goal_node):
                 # update the {node: cost} dictionary
                 travel_costs[neighbor] = new_cost
         # return the {node: predecessor} and {node: cost} dictionaries; delete the pass keyword
-        return family, travel_costs
+    return family, travel_costs
 
 
 def greedy_best_first(graph, start_node, goal_node):
